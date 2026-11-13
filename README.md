@@ -1,61 +1,60 @@
 # GeyserSimpleNetherFogFix
 
-> ⚠️ **【重要なお知らせ】**
-> このコードは私自身の環境（個人用）に合わせて作成・テストしたものです。今後のアップデートや不具合報告・バグ修正への対応については、**気が向いたら対応するかもしれません**（基本は未定です）。あくまで「メモ・バックアップ」または「同様の機能を探している方向け」の現状渡しとしての公開となりますので、あらかじめご了承ください。
+> ⚠️ **[Important Notice]**
+> This code was created and tested for my own personal environment. Regarding future updates, bug reports, and fix requests, **I may or may not address them when I feel like it** (essentially unmaintained). This is released "as-is" primarily as a personal "memo / backup" or for anyone looking for a similar lightweight solution, so please keep that in mind before using.
 
-**GeyserSimpleNetherFogFix** は、Geyserの `nether-roof-workaround`を `true` にした際にネザー全体が同じ赤い霧になってしまう問題を解消し、**バイオームごとに異なる本来の霧（ネザーデフォルトの挙動）**を復元するためのシンプルなGeyser拡張プラグイン（Extension）です。
+**GeyserSimpleNetherFogFix** is a lightweight Geyser extension designed to fix the issue where enabling Geyser's `nether-roof-workaround` forces the entire Nether to be covered in a uniform red fog, restoring **the proper biomespecific fog (vanilla Java-like Nether behavior)**.
 
 ![demo](image/f6345e82c34c74b772d7e854d8be0a0e.gif)
 
 ---
 
-## ⚠️ 既知の不具合・制限事項（トレードオフ）
+## ⚠️ Known Issues & Limitations (Trade-offs)
 
-本プラグインを導入することでバイオームごとの霧や環境カラーが正常に表示されるようになりますが、**代償として以下の不具合（描画上の制限）が発生します。**
+While this plugin successfully restores biome-specific fog and environment colors, **it comes with the following rendering trade-offs:**
 
-* **描写範囲外・奥の描画の乱れ（ガビガビ問題）**
-  * ネザーの奥の方や描写範囲外が、ガビガビとした荒れた表示になってしまう現象が確認されています。
-  * 特に**岩盤の上から上空を見上げたり、横方向の遠くを見渡したりした際**にこの状態が顕著に現めます。
-* **作者による検証結果**
-  * 私自身もテクスチャの調整など様々なアプローチでこの描画の乱れを修正できないか試みましたが、**現在のところ改善は不可能**でした。
-  * GeyserおよびBedrock版クライアントのレンダリング仕様に起因するものと思われるため、この点をご理解・ご了承の上でご利用ください。
+* **Distant / Out-of-Range Rendering Glitches ("Gabi-gabi" Pixelation)**
+  * A known visual glitch occurs where distant areas or regions outside the normal rendering distance appear jagged and noisy.
+  * This is especially noticeable when **looking up into the sky from the Nether roof or scanning wide horizontal views**.
+* **Author's Testing & Findings**
+  * I attempted various approaches, including texture adjustments, to fix this rendering artifact, but **it is currently unfixable**.
+  * Since this appears to be tied to the native rendering specifications of the Geyser and Bedrock clients, please understand and accept this limitation before use.
 
 ![Example screenshot](https://github.com/RedCatKnights/GeyserSimpleNetherFogFix/blob/main/image/2506b6df-b18a-454d-808a-76fc6f6b7c9c.jpeg)
 
 ---
 
-## 🧪 テスト環境
+## 🧪 Tested Environments
 
-このプラグインは以下の環境で動作確認を行っています。
+This plugin has been verified to work in the following environments:
 
 * **Velocity**: `velocity-4.2.0-30`
 * **Geyser**: `2.12.1-b1302`
-* **Paper**: `paper-1.21.10-127`(Geyser: `2.9.2-b1031`)
+* **Paper**: `paper-1.21.10-127` (Geyser: `2.9.2-b1031`)
 
-※これ以外の環境での動作保証は致しかねます。
+*Note: Operation in any other environment is not guaranteed.*
 
 ---
 
-## 💡 開発の経緯と設計のこだわり
+## 💡 Background & Design Philosophy
 
-ネザーの岩盤上に行けるようにするため Geyser のワークアラウンド機能を有効にすると、ネザー全体が一律の赤い霧で覆われてしまうのがどうしても気になっていました。同様の機能を持つプラグインを探したものの、「ネザーの霧の修正だけをシンプルに行うもの」が見つからなかったため、自作することにしました。
+When enabling Geyser's workaround to allow players onto the Nether roof, I was always bothered by the entire Nether being blanketed in a single flat red fog. While looking for a plugin with similar functionality, I couldn't find anything that "simply and solely fixed the Nether fog," so I decided to make it myself.
 
-### 🚀 パフォーマンスとサーバー負荷への配慮
-毎ティック（秒間20回）全員の状態を監視し続けるような重い処理は避け、サーバーのTPSに影響を与えないよう**軽量かつ効率的な設計**にこだわりました。
-* **イベント駆動（遅延付き）**: ログイン時やネザーへのポータル移動直後など、クライアントの読み込みラグを考慮したミリ秒単位の遅延（設定可能）を挟んで確実に霧を削除します。
-* **低頻度の定期チェック（保険）**: 一度霧が消えれば別のバイオームへ移動しても維持されるため、無駄な常時監視を行わず、数秒〜数十秒おきの低頻度な定期チェックで確実性を担保しています。
+### 🚀 Performance & Server Load Considerations
+To avoid heavy processes like continuously monitoring every player's state every tick (20 times per second), the plugin is built with a **lightweight and efficient design** that won't impact server TPS:
+* **Event-Driven (with Delays)**: Clears the fog reliably by introducing configurable millisecond-level delays upon login or immediately after passing through a Nether portal, accounting for client loading lags.
+* **Low-Frequency Periodic Check (Safety Net)**: Once the fog is removed, it persists even when moving across biomes. Instead of constant active monitoring, a low-frequency periodic check runs every few to dozens of seconds to ensure consistency.
 
-### 参考にさせていただいたプロジェクト
-本プラグインは、素晴らしい拡張機能である [GeyserExtras](https://github.com/letsgoaway/GeyserExtras) （および派生エコシステム）のコードを解析し、ネザーの霧を修正する機能だけを抽出してシンプルにまとめたものです。
-ベースとなる素晴らしいコードを公開してくださった開発者の皆様に深く感謝いたします。
+### Referenced Projects
+This plugin extracts and simplifies the core logic used to fix Nether fog from the fantastic extension [GeyserExtras](https://github.com/letsgoaway/GeyserExtras) (and its derivative ecosystem). Deepest thanks to the developers who open-sourced such wonderful base code.
 
-### 🛠️ 処理の概要 ＆ 技術メモ
-将来的にGeyserや依存関係のアップデートによって動作しなくなった際、ここを起点に元コードを追跡して修正するための技術メモです。
+### 🛠️ Processing Overview & Technical Notes
+Technical notes to help trace and fix the original code if it ever breaks due to future updates in Geyser or dependencies.
 
-* **参照元**: `GeyserExtras 2.0.0-BETA-11`
-* **対象ファイル**: `core/src/main/java/dev/letsgoaway/geyserextras/core/ExtrasPlayer.java`（216行目〜218行目）
+* **Reference Source**: `GeyserExtras 2.0.0-BETA-11`
+* **Target File**: `core/src/main/java/dev/letsgoaway/geyserextras/core/ExtrasPlayer.java` (lines 216–218)
 
-該当する以下のコアロジックを抽出し、極限までシンプルにまとめています：
+Extracted and streamlined the following core logic:
 
 ```java
 if (session.getDimensionType().isNetherLike() && session.camera().fogEffects().contains(DimensionUtils.BEDROCK_FOG_HELL)) {
@@ -65,21 +64,21 @@ if (session.getDimensionType().isNetherLike() && session.camera().fogEffects().c
 
 ---
 
-## 📥 インストール方法
-build フォルダ内にある GeyserSimpleNetherFogFix-x.x.x.jar をダウンロードします。
+## 📥 Installation
+Download the GeyserSimpleNetherFogFix-x.x.x.jar from the build directory.
 
-ダウンロードしたファイルを、Geyserのプラグイン（Extensions）フォルダ内に配置します。
+Place the downloaded file into your Geyser extensions folder (extensions/).
 
-サーバーを起動、またはGeyserをリロード（再起動）してください。
-
----
-
-## 🤖 開発に関する注記
-本プラグインのコード作成にあたっては、AI（Gemini）のサポートを受けています。私自身に簡単なプログラミングの知識はあるものの、ゼロからのコーディングは困難なため、AIの協力に感謝しています。
+Start your server or reload/restart Geyser.
 
 ---
 
-## 📢 公開の理由
-「ネザーの岩盤上ビルドを有効にしたいけれど、あの赤い霧一色になるのだけはどうにかしたい……自分と同じように、シンプルにネザーの霧だけを修正できる機能を探している人に使ってほしい」という思い、そして自分自身の開発・保守用のメモとして公開に至りました。同じ悩みを持つサーバー管理者のお役に立てれば幸いです。
+## 🤖 Note on Development
+The code for this plugin was created with the support of AI (Gemini). While I have basic programming knowledge, writing code completely from scratch is difficult, so I am very grateful for the AI's assistance.
+
+---
+
+## 📢 Reason for Public Release
+I decided to publish this because I wanted to share it with anyone who has the same frustration—"I want to enable building on the Nether roof, but I can't stand that single red fog covering everything..."—as well as to serve as a personal development and maintenance memo. I hope it helps other server administrators facing the same issue.
 
 ---
