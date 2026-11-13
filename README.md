@@ -5,7 +5,7 @@
 
 **GeyserSimpleNetherFogFix** is a lightweight Geyser extension designed to fix the issue where enabling Geyser's `nether-roof-workaround` forces the entire Nether to be covered in a uniform red fog, restoring **the proper biomespecific fog (vanilla Java-like Nether behavior)**.
 
-![demo](image/f6345e82c34c74b772d7e854d8be0a0e.gif)
+![demo](https://github.com/RedCatKnights/GeyserSimpleNetherFogFix/blob/main/image/f6345e82c34c74b772d7e854d8be0a0e.gif)
 
 ---
 
