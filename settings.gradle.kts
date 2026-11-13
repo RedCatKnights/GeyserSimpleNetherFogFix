@@ -1,2 +1,2 @@
-rootProject.name = "SimpleNetherFogFix"
+rootProject.name = "GeyserSimpleNetherFogFix"
 
