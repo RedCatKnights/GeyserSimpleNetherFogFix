@@ -3,7 +3,7 @@
 > ⚠️ **【重要なお知らせ】**
 > このコードは私自身の環境（個人用）に合わせて作成・テストしたものです。今後のアップデートや不具合報告・バグ修正への対応については、**気が向いたら対応するかもしれません**（基本は未定です）。あくまで「メモ・バックアップ」または「同様の機能を探している方向け」の現状渡しとしての公開となりますので、あらかじめご了承ください。
 
-**GeyserSimpleNetherFogFix** は、Geyserの `above-bedrock-nether-building`（旧 `nether-roof-workaround`）を `true` にした際にネザー全体が同じ赤い霧になってしまう問題を解消し、**バイオームごとに異なる本来の霧（ネザーデフォルトの挙動）**を復元するためのシンプルなGeyser拡張プラグイン（Extension）です。
+**GeyserSimpleNetherFogFix** は、Geyserの `nether-roof-workaround`を `true` にした際にネザー全体が同じ赤い霧になってしまう問題を解消し、**バイオームごとに異なる本来の霧（ネザーデフォルトの挙動）**を復元するためのシンプルなGeyser拡張プラグイン（Extension）です。
 
 ![demo](image/f6345e82c34c74b772d7e854d8be0a0e.gif)
 
@@ -28,9 +28,9 @@
 
 このプラグインは以下の環境で動作確認を行っています。
 
-* **Velocity**: `velocity-3.4.0-SNAPSHOT-559`
-* **Geyser**: `2.9.2-b1031`
-* **Paper**: `paper-1.21.10-127`
+* **Velocity**: `velocity-4.2.0-30`
+* **Geyser**: `2.12.1-b1302`
+* **Paper**: `paper-1.21.10-127`(Geyser: `2.9.2-b1031`)
 
 ※これ以外の環境での動作保証は致しかねます。
 
