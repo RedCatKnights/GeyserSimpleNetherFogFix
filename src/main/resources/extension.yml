@@ -1,6 +1,6 @@
-id: simplenetherfogfix
-name: SimpleNetherFogFix
-main: com.example.fogfix.NetherFogFix
-version: 2.1.0
+id: geysersimplenetherfogfix
+name: GeyserSimpleNetherFogFix
+main: com.redcat.fogfix.NetherFogFix
+version: 2.1.1
 api: 2.4.2
 authors: ["RedCatKnights"]
