@@ -1,5 +1,5 @@
-# SimpleNetherFogFix
-SimpleNetherFogFixはGeyserのnether-roof-workaroundをtrueにした際にネザー全体が同じ赤い霧になるのをバイオームごとに異なる霧が発生する(ネザーデフォルトの挙動になる)ようにするシンプルなExtensionsです。
+# GeyserSimpleNetherFogFix
+GeyserSimpleNetherFogFixはGeyserのnether-roof-workaroundをtrueにした際にネザー全体が同じ赤い霧になるのをバイオームごとに異なる霧が発生する(ネザーデフォルトの挙動になる)ようにするシンプルなExtensionsです。
 
 このプラグインは以下の環境でテストされました。
 - velocity-3.4.0-SNAPSHOT-559
