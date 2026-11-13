@@ -5,7 +5,7 @@
 
 **GeyserSimpleNetherFogFix** は、Geyserの `nether-roof-workaround`を `true` にした際にネザー全体が同じ赤い霧になってしまう問題を解消し、**バイオームごとに異なる本来の霧（ネザーデフォルトの挙動）**を復元するためのシンプルなGeyser拡張プラグイン（Extension）です。
 
-![demo](image/f6345e82c34c74b772d7e854d8be0a0e.gif)
+![demo](https://github.com/RedCatKnights/GeyserSimpleNetherFogFix/blob/main/image/f6345e82c34c74b772d7e854d8be0a0e.gif)
 
 ---
 
