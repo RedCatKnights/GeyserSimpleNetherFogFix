@@ -65,11 +65,9 @@ if (session.getDimensionType().isNetherLike() && session.camera().fogEffects().c
 ---
 
 ## 📥 Installation
-Download the GeyserSimpleNetherFogFix-x.x.x.jar from the build directory.
-
-Place the downloaded file into your Geyser extensions folder (extensions/).
-
-Start your server or reload/restart Geyser.
+1. Download `GeyserSimpleNetherFogFix-x.x.x.jar` from the release/build directory.
+2. Place the downloaded file into your Geyser extensions folder (`extensions/`).
+3. Start your server or reload/restart Geyser.
 
 ---
 
